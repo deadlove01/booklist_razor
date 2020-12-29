@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Book.Model;
 
-namespace BulkyBook.Data
+namespace Book.Infrastructure.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
@@ -12,5 +13,8 @@ namespace BulkyBook.Data
             : base(options)
         {
         }
+
+        public DbSet<Category> Categories { get; set; }
+
     }
 }
