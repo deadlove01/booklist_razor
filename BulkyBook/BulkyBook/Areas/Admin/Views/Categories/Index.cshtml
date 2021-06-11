@@ -1,36 +1,58 @@
-﻿@model IEnumerable<Book.Model.Category>
+﻿@model Book.Model.ViewModels.CategoryVM
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<br />
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-primary">Category List </h2>
+    </div>
+    <div class="col-6 text-right">
+        <a class="btn btn-primary" asp-action="Upsert"><i class="fas fa-plus"></i> &nbsp; Create New Category</a>
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
+<br />
+
+<div class="p-4 border rounded">
+    @if (Model.Categories.Count() > 0)
+    {
+<table class="table table-striped border">
+    <tr class="table-secondary">
+        <th>
+            Catgeory Name
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Categories)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(m => item.Name)
+    </td>
+    <td>
+        <div class="text-center">
+            <a href="/Admin/Category/Upsert/@item.Id" class="btn btn-success text-white"
+               style="cursor:pointer">
+                <i class="fas fa-edit"></i>
+            </a>
+            &nbsp;
+            <button onclick=Delete("/Admin/Category/Delete/@item.Id")
+                    class="btn btn-danger text-white" style="cursor:pointer">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </div>
+    </td>
+</tr>}
 </table>
+                <div page-model="@Model.PagingInfo" page-classes-enabled="true" page-class="btn border"
+                     page-class-normal="btn btn-light" page-class-selected="btn btn-info active"
+                     class="btn-group float-right"></div>
+                                <br /> }
+                                            else
+                                            {
+                                <p> No Categories Exists.</p>}
+</div>

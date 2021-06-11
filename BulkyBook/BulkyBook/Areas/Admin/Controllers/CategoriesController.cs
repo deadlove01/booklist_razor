@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Book.Infrastructure.Data;
 using Book.Model;
+using Book.Model.ViewModels;
 
 namespace BulkyBook.Areas.Admin.Controllers
 {
@@ -25,7 +26,12 @@ namespace BulkyBook.Areas.Admin.Controllers
         // GET: Admin/Categories
         public async Task<IActionResult> Index()
         {
-            return View(await unitOfWork.Category.GetAllAsync());
+            var cates = await unitOfWork.Category.GetAllAsync();
+            var categoryVM = new CategoryVM { 
+                Categories = cates
+            };
+            
+            return View(categoryVM);
         }
 
         // GET: Admin/Categories/Details/5
